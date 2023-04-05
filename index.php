@@ -26,7 +26,7 @@
       data-bs-theme="dark"
     >
       <div class="container-fluid ms-5 me-5">
-        <a class="navbar-brand" href="#">E-BOOK&#9733PLUS-ULTRA</a>
+        <a class="navbar-brand" href="#">E-BOOK<!-- &#9733 -->PLUS-ULTRA</a>
         <button
           class="navbar-toggler"
           type="button"
