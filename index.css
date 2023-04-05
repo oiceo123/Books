@@ -1,0 +1,14 @@
+body {
+    background: #121212;
+    padding-top: 72px;
+}
+
+.carousel-item img {
+    height: 400px;
+}
+
+.card {
+    box-sizing: border-box;
+    width: 202px;
+    height: 302px;
+}
