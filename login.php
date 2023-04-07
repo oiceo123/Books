@@ -13,31 +13,31 @@
 </head>
 
 <body>
-    <div class="text-center py-4 border-bottom">
+    <div class="text-center py-4 mb-4 border-bottom">
         <h3 class="">E-BOOK&#9733PLUS-ULTRA</h3>
     </div>
-    <div class="container py-4">
-        <div class="row gy-3 justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
             <!-- Email Input -->
-            <div class="col-12 p-0" style="max-width: 450px;">
+            <div class="col-12 p-0 mb-3" style="max-width: 450px;">
                 <label for="exampleFormControlInput1" class="form-label fw-bold">Email address or username</label>
                 <input type="email" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="Email address or username">
             </div>
-            <div class="w-100 mt-0"></div>
+            <div class="w-100"></div>
             <!-- Password Input -->
-            <div class="col-12 p-0" style="max-width: 450px;">
+            <div class="col-12 p-0 mb-3" style="max-width: 450px;">
                 <label for="inputPassword5" class="form-label fw-bold">Password</label>
                 <div class="input-group">
                     <input type="password" id="inputPassword5" class="form-control form-control-lg" aria-labelledby="passwordHelpBlock" placeholder="Password">
                     <span class="input-group-text"><i class="bi bi-eye-slash"></i></span>
                 </div>
             </div>
-            <div class="w-100 mt-0"></div>
+            <div class="w-100"></div>
             <!-- Forgot Link -->
-            <div class="col-12 p-0" style="max-width: 450px;">
+            <div class="col-12 p-0 mb-3" style="max-width: 450px;">
                 <p><a href="#" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forgot your password?</a></p>
             </div>
-            <div class="w-100 mt-0"></div>
+            <div class="w-100"></div>
             <!-- Remember Checkbox and Log In Button -->
             <div class="col-12 p-0" style="max-width: 450px;">
                 <div class="d-md-flex">
