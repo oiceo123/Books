@@ -52,6 +52,11 @@
 
   <!-- Carousel -->
   <div id="carouselExampleAutoplaying" class="carousel slide mx-5 mb-5 mt-3" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="https://cdn.pixabay.com/photo/2021/02/08/15/02/mountains-5995081__340.jpg" class="d-block w-100" />
@@ -64,11 +69,11 @@
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-      <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-      <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
@@ -76,7 +81,7 @@
   <!-- Content -->
   <div class="container">
     <!-- ส่วนหัวข้อ -->
-    <div class="row border-bottom mb-3">
+    <div class="row border-bottom mxw-row-mobile mxw-row-desktop mb-3 mx-auto">
       <div class="col h4 text-light">หนังสือขายดี</div>
       <div class="col text-end pt-1 h5">
         <a href="" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ดูทั้งหมด
@@ -84,7 +89,7 @@
       </div>
     </div>
     <!-- ส่วน Card -->
-    <div class="row row-cols-1 row-cols-md-5 g-4">
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 mxw-row-mobile mxw-row-desktop mx-auto">
       <div class="col">
         <div class="card w-100 h-100">
           <img src="./img/a.png" class="card-img-top border border-bottom" alt="..." />
@@ -112,6 +117,14 @@
       <div class="col">
         <div class="card w-100 h-100">
           <img src="./img/d.png" class="card-img-top border border-bottom" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card w-100 h-100">
+          <img src="./img/e.png" class="card-img-top border border-bottom" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
           </div>
