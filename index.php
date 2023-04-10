@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./index.css" />
   <title>E-BOOK</title>
@@ -13,31 +14,59 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top pt-3 pb-3" style="background-color: #181818" data-bs-theme="dark">
-    <div class="container-fluid ms-5 me-5">
-      <a class="navbar-brand" href="#">E-BOOK&#9733PLUS-ULTRA</a>
+  <nav class="navbar navbar-expand-lg fixed-top py-3" style="background-color: rgb(253, 253, 253);">
+    <div class="container-fluid ms-3 me-3">
+      <!-- Logo -->
+      <a class="navbar-brand" href="./">E-BOOK&#9733PLUS-ULTRA</a>
+      <!-- Navbar toggler (ขีด 3 ขีด) (แสดงตอนจอขนาดเล็ก) -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      <!-- Navbar Container -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Nav List -->
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link active" aria-current="page" href="./">Bookstore</a>
+          <!-- Search -->
+          <li class="nav-item me-3 align-self-end">
+            <div class="input-group" style="width: 280px;">
+              <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
+              <button class="btn border search" type="button" id="button-addon2">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
           </li>
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="./signup.php">Sign Up</a>
+          <!-- Cart -->
+          <li class="nav-item me-3">
+            <!-- Link to cart page -->
+            <a class="nav-link pb-0 position-relative" href="./cart.php">
+              <!-- Cart Icon -->
+              <i class="bi bi-cart" style="font-size: 25px;">
+                <!-- Badges -->
+                <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 22px;">
+                  1
+                </span>
+              </i>
+            </a>
           </li>
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="./login.php">Log In</a>
+          <!-- Login -->
+          <li class="nav-item me-3">
+            <a class="nav-link pb-0" href="./login.php">
+              <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+            </a>
           </li>
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="./cart.php">Cart</a>
-          </li>
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="#">Dark Mode</a>
-          </li>
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="#">Light Mode</a>
+          <!-- Dropdown light mode or dark mode -->
+          <li class="nav-item">
+            <div class="dropdown">
+              <!-- Selected mode -->
+              <button class="btn dropdown-toggle border-start pb-0 ps-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-brightness-high" style="font-size: 25px;"></i>
+              </button>
+              <!-- Dropdown Menu (Light / Dark) -->
+              <ul class="dropdown-menu dropdown-menu-end mt-2">
+                <li class="dropdown-item"><i class="bi bi-brightness-high"></i> Light</li>
+                <li class="dropdown-item"><i class="bi bi-moon-stars-fill"></i> Dark</li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
@@ -45,7 +74,7 @@
   </nav>
 
   <!-- Carousel -->
-  <div id="carouselExampleAutoplaying" class="carousel slide mx-5 mb-5 mt-3" data-bs-ride="carousel">
+  <div id="carouselExampleAutoplaying" class="carousel slide mb-5" data-bs-ride="carousel" style="margin-top: 78px;">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -76,7 +105,7 @@
   <div class="container">
     <!-- ส่วนหัวข้อ -->
     <div class="row border-bottom mxw-row-mobile mxw-row-desktop mb-3 mx-auto">
-      <div class="col h4 text-light">หนังสือขายดี</div>
+      <div class="col h4">หนังสือขายดี</div>
       <div class="col text-end pt-1 h5">
         <a href="" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ดูทั้งหมด
         </a>
