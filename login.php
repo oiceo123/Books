@@ -13,22 +13,23 @@
 </head>
 
 <body>
+    <!-- Logo -->
     <div class="text-center py-4 mb-4 border-bottom">
-        <h3 class="">E-BOOK&#9733PLUS-ULTRA</h3>
+        <h3>E-BOOK&#9733PLUS-ULTRA</h3>
     </div>
     <div class="container">
         <div class="row justify-content-center">
             <!-- Email Input -->
             <div class="col-12 p-0 mb-3" style="max-width: 450px;">
                 <label for="exampleFormControlInput1" class="form-label fw-bold">Email address or username</label>
-                <input type="email" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="Email address or username">
+                <input type="email" class="form-control" id="exampleFormControlInput1" style="height: 48px;" placeholder="Email address or username">
             </div>
             <div class="w-100"></div>
             <!-- Password Input -->
             <div class="col-12 p-0 mb-3" style="max-width: 450px;">
                 <label for="inputPassword5" class="form-label fw-bold">Password</label>
                 <div class="input-group">
-                    <input type="password" id="inputPassword5" class="form-control form-control-lg" aria-labelledby="passwordHelpBlock" placeholder="Password">
+                    <input type="password" id="inputPassword5" class="form-control" style="height: 48px;" aria-labelledby="passwordHelpBlock" placeholder="Password">
                     <span class="input-group-text"><i class="bi bi-eye-slash"></i></span>
                 </div>
             </div>
@@ -39,10 +40,10 @@
             </div>
             <div class="w-100"></div>
             <!-- Remember Checkbox and Log In Button -->
-            <div class="col-12 p-0" style="max-width: 450px;">
+            <div class="col-12 p-0 mb-4" style="max-width: 450px;">
                 <div class="d-md-flex">
                     <!-- Remember Checkbox -->
-                    <div class="form-check mb-4">
+                    <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                         <label class="form-check-label text-success" for="flexCheckChecked">
                             Remember me
@@ -50,8 +51,16 @@
                     </div>
                     <!-- Log In Button -->
                     <div class="d-grid ms-md-auto col-md-4">
-                        <button type="button" class="btn btn-success rounded-pill">LOG IN</button>
+                        <a href="#" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2" role="button">Log In</a>
                     </div>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <!-- Sign Up Button -->
+            <div class="col-12 px-0 pt-4 border-top text-center" style="max-width: 450px;">
+                <h5>Don't have an account?</h5>
+                <div class="d-grid mt-4">
+                    <a href="./signup.php" class="d-flex btn btn-outline-secondary rounded-pill justify-content-center align-items-center p-2" role="button">SIGN UP</a>
                 </div>
             </div>
         </div>
