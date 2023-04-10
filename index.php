@@ -25,13 +25,7 @@
             <a class="nav-link active" aria-current="page" href="#">Bookstore</a>
           </li>
           <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="#">Events</a>
-          </li>
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="./signup.php">Sign Up</a>
           </li>
           <li class="nav-item fs-5 me-2">
             <a class="nav-link" href="./login.php">Log In</a>
@@ -132,7 +126,7 @@
       </div>
       <div class="col">
         <div class="card w-100 h-100">
-          <img src="./img/e.png" class="card-img-top border border-bottom" alt="..." />
+          <img src="./img/circle.png" class="card-img-top border border-bottom" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
           </div>
