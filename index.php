@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item fs-5 me-2">
-            <a class="nav-link active" aria-current="page" href="#">Bookstore</a>
+            <a class="nav-link active" aria-current="page" href="./">Bookstore</a>
           </li>
           <li class="nav-item fs-5 me-2">
             <a class="nav-link" href="./signup.php">Sign Up</a>
@@ -31,7 +31,7 @@
             <a class="nav-link" href="./login.php">Log In</a>
           </li>
           <li class="nav-item fs-5 me-2">
-            <a class="nav-link" href="#">Cart</a>
+            <a class="nav-link" href="./cart.php">Cart</a>
           </li>
           <li class="nav-item fs-5 me-2">
             <a class="nav-link" href="#">Dark Mode</a>
