@@ -103,7 +103,7 @@
                 <h4>ยอดชำระ <span class="fw-bold">฿69</span></h4>
             </div>
             <!-- Link to payment page -->
-            <div class="col-6">
+            <div class="col" style="max-width: 250px;">
                 <a href="#" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2" role="button">ไปหน้าชำระเงิน</a>
             </div>
         </div>
