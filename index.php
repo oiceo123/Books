@@ -115,11 +115,13 @@
     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 mxw-row-mobile mxw-row-desktop mx-auto">
       <div class="col">
         <div class="card w-100 h-100">
-          <img src="./img/a.png" class="card-img-top border border-bottom" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-          </div>
+          <a href="./detail.php">
+            <img src="./img/a.png" class="card-img-top border border-bottom" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+            </div>
         </div>
+        </a>
       </div>
       <div class="col">
         <div class="card w-100 h-100">

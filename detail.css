@@ -1,0 +1,24 @@
+/* หน้าไหนมี Navbar ต้องเอาไปด้วย */
+.dropdown-menu {
+  min-width: 7.5rem;
+}
+
+.dropdown-toggle::after {
+  vertical-align: 0.45em;
+}
+
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
+  border-color: white;
+}
+
+.navbar-collapse {
+  flex-grow: 0;
+}
+
+.search:hover {
+  background-color: #f8f9fa;
+}
