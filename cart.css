@@ -22,3 +22,36 @@
 .search:hover {
   background-color: #f8f9fa;
 }
+
+.nav-underline {
+  gap: 0;
+}
+
+.nav-underline .nav-link {
+  color: #000;
+  transition: none;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 4px;
+}
+
+.nav-underline .nav-link.active,
+.nav-underline .show > .nav-link {
+  border-bottom-color: #00bf6c;
+  border-bottom-width: 4px;
+}
+
+.nav-underline .nav-link:focus,
+.nav-underline .nav-link:hover {
+  border-bottom-color: #00bf6c;
+  border-bottom-width: 4px;
+}
+
+.hide-scollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

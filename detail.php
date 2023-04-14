@@ -14,67 +14,140 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top py-3" style="background-color: rgb(253, 253, 253);">
-        <div class="container-fluid ms-3 me-3">
-            <!-- Logo -->
-            <a class="navbar-brand" href="./">E-BOOK&#9733PLUS-ULTRA</a>
-            <!-- Navbar toggler (ขีด 3 ขีด) (แสดงตอนจอขนาดเล็ก) -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Navbar Container -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Nav List -->
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <!-- Search -->
-                    <li class="nav-item me-3 align-self-end">
-                        <div class="input-group" style="width: 280px;">
-                            <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
-                            <button class="btn border search" type="button" id="button-addon2">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </div>
-                    </li>
-                    <!-- Cart -->
-                    <li class="nav-item me-3">
-                        <!-- Link to cart page -->
-                        <a class="nav-link pb-0 position-relative" href="./cart.php">
-                            <!-- Cart Icon -->
-                            <i class="bi bi-cart" style="font-size: 25px;">
-                                <!-- Badges -->
-                                <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 22px;">
-                                    1
-                                </span>
-                            </i>
-                        </a>
-                    </li>
-                    <!-- Login -->
-                    <li class="nav-item me-3">
-                        <a class="nav-link pb-0" href="./login.php">
-                            <i class="bi bi-person-circle" style="font-size: 25px;"></i>
-                        </a>
-                    </li>
-                    <!-- Dropdown light mode or dark mode -->
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <!-- Selected mode -->
-                            <button class="btn dropdown-toggle border-start pb-0 ps-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-brightness-high" style="font-size: 25px;"></i>
-                            </button>
-                            <!-- Dropdown Menu (Light / Dark) -->
-                            <ul class="dropdown-menu dropdown-menu-end mt-2">
-                                <li class="dropdown-item"><i class="bi bi-brightness-high"></i> Light</li>
-                                <li class="dropdown-item"><i class="bi bi-moon-stars-fill"></i> Dark</li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+    <div class="fixed-top">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg py-3" style="background-color: rgb(253, 253, 253);">
+            <div class="container-fluid ms-sm-3 me-sm-3">
+                <!-- Logo -->
+                <a class="navbar-brand" style="height: 45.5px;" href="./">E-BOOK&#9733PLUS-ULTRA</a>
+                <!-- Navbar toggler (ขีด 3 ขีด) ( แสดงตอนจอขนาดต่ำกว่า lg (992px) ) -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Navbar Container -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Nav List (xs-lg) -->
+                    <ul class="navbar-nav d-flex d-lg-none">
+                        <!-- Login -->
+                        <li class="nav-item border-bottom mt-4">
+                            <a class="nav-link" href="./login.php">
+                                <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                                <span class="ms-2" style="font-size: 20px;">Log In</span>
+                            </a>
+                        </li>
+                        <!-- Cart -->
+                        <li class="nav-item border-bottom mt-3">
+                            <!-- Link to cart page -->
+                            <a class="nav-link position-relative" href="./cart.php">
+                                <!-- Cart Icon -->
+                                <i class="bi bi-cart" style="font-size: 25px;">
+                                    <!-- Badges -->
+                                    <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 16px; top: 4px;">
+                                        1
+                                    </span>
+                                </i>
+                                <!-- Cart Text -->
+                                <span class="ms-2" style="font-size: 20px;">Cart</span>
+                            </a>
+                        </li>
+                        <!-- Search -->
+                        <li class="nav-item mt-5 mb-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
+                                <button class="btn border search" type="button" id="button-addon2">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </li>
+                        <!-- Dropdown light mode or dark mode ยังไม่รู้จะจัดวางยังไงดี -->
+                        <!-- <li class="nav-item">
+                            <div class="dropdown">
+                                Selected mode
+                                <button class="btn dropdown-toggle p-0" style="font-size: 25px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-brightness-high"></i>
+                                    <span class="ms-1">Theme</span>
+                                </button>
+                                Dropdown Menu (Light / Dark)
+                                <ul class="dropdown-menu dropdown-menu-end mt-2">
+                                    <li class="dropdown-item"><i class="bi bi-brightness-high"></i> Light</li>
+                                    <li class="dropdown-item"><i class="bi bi-moon-stars-fill"></i> Dark</li>
+                                </ul>
+                            </div>
+                        </li> -->
+                    </ul>
+                    <!-- Nav List (lg-xxl) -->
+                    <ul class="navbar-nav d-none d-lg-flex">
+                        <!-- Search -->
+                        <li class="nav-item me-3 align-self-end">
+                            <div class="input-group" style="width: 280px;">
+                                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
+                                <button class="btn border search" type="button" id="button-addon2">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </li>
+                        <!-- Cart -->
+                        <li class="nav-item me-3">
+                            <!-- Link to cart page -->
+                            <a class="nav-link pb-0 position-relative" href="./cart.php">
+                                <!-- Cart Icon -->
+                                <i class="bi bi-cart" style="font-size: 25px;">
+                                    <!-- Badges -->
+                                    <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 22px;">
+                                        1
+                                    </span>
+                                </i>
+                            </a>
+                        </li>
+                        <!-- Login -->
+                        <li class="nav-item me-3">
+                            <a class="nav-link pb-0" href="./login.php">
+                                <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                            </a>
+                        </li>
+                        <!-- Dropdown light mode or dark mode -->
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <!-- Selected mode -->
+                                <button class="btn dropdown-toggle border-start pb-0 ps-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-brightness-high" style="font-size: 25px;"></i>
+                                </button>
+                                <!-- Dropdown Menu (Light / Dark) -->
+                                <ul class="dropdown-menu dropdown-menu-end mt-2">
+                                    <li class="dropdown-item"><i class="bi bi-brightness-high"></i> Light</li>
+                                    <li class="dropdown-item"><i class="bi bi-moon-stars-fill"></i> Dark</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+        <!-- Bottom Nav -->
+        <ul class="nav nav-underline justify-content-sm-center justify-content-start flex-nowrap overflow-x-auto hide-scollbar" style="background-color: rgb(250, 249, 250); white-space: nowrap;">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">หน้าแรก</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">ขายดี</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">มาใหม่</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">โปรโมชั่น</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">ฟรีกระจาย</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">แนะนำ</a>
+            </li>
+        </ul>
+    </div>
 
     <!-- Content -->
-    <div class="container pb-4" style="margin-top: 78px;">
+    <div class="container pb-4" style="margin-top: 134px;">
         <div class="row text-center mb-4">
             <div class="col">
                 <h2>Book Name</h2>
