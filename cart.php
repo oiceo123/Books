@@ -170,7 +170,7 @@
                     <!-- Book name and Price -->
                     <div class="align-self-start">
                         <!-- Book name -->
-                        <div class="fs-5 fw-bold">
+                        <div class="fs-5 fw-bold text-break">
                             A Book
                         </div>
                         <!-- Book price -->
@@ -179,7 +179,7 @@
                         </div>
                     </div>
                     <!-- Delete Button -->
-                    <button class="btn btn-outline-danger ms-auto px-4 py-1">ลบ</button>
+                    <button class="btn btn-outline-danger ms-auto px-3 px-sm-4 py-1">ลบ</button>
                 </div>
             </div>
         </div>
