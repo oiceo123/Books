@@ -147,7 +147,7 @@
     </div>
 
     <!-- Content -->
-    <div class="container" style="margin-top: 134px; max-width: 700px;">
+    <div class="container" style="margin-top: 141.5px; max-width: 700px;">
         <!-- Head -->
         <div class="row border-bottom text-center">
             <div class="col">
