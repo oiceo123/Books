@@ -1,3 +1,7 @@
+<?php
+require "connect.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,12 +56,14 @@
                         </li>
                         <!-- Search -->
                         <li class="nav-item mt-5 mb-4">
-                            <div class="input-group">
-                                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
-                                <button class="btn border search" type="button" id="button-addon2">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </div>
+                            <form action="search.php">
+                                <div class="input-group">
+                                    <input type="text" name="BookName" class="form-control" style="height: 40px;" placeholder="ค้นหาชื่อหนังสือ">
+                                    <button class="btn border search" type="submit" id="button-addon2">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </li>
                         <!-- Dropdown light mode or dark mode ยังไม่รู้จะจัดวางยังไงดี -->
                         <!-- <li class="nav-item">
@@ -79,12 +85,14 @@
                     <ul class="navbar-nav d-none d-lg-flex">
                         <!-- Search -->
                         <li class="nav-item me-3 align-self-end">
-                            <div class="input-group" style="width: 280px;">
-                                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
-                                <button class="btn border search" type="button" id="button-addon2">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </div>
+                            <form action="search.php">
+                                <div class="input-group" style="width: 280px;">
+                                    <input type="text" name="BookName" class="form-control" style="height: 40px;" placeholder="ค้นหาชื่อหนังสือ">
+                                    <button class="btn border search" type="submit" id="button-addon2">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </li>
                         <!-- Cart -->
                         <li class="nav-item me-3">
@@ -146,95 +154,146 @@
         </ul>
     </div>
 
+    <!-- กำหนดคำสั่ง SQL ให้ดึงสินค้าตามรหัสสินค้า -->
+    <?php
+    $stmt = $conn->prepare("SELECT * FROM book WHERE BookId = ?");
+    $stmt->bindParam(1, $_GET["BookId"]);
+    $stmt->execute();
+    $row = $stmt->fetch();
+    ?>
+
     <!-- Content -->
     <div class="container py-4" style="margin-top: 117.5px;">
         <!-- Header -->
         <div class="row text-center mb-4">
             <div class="col">
-                <h2>Book Name</h2>
+                <h2><?= $row["BookName"] ?></h2>
             </div>
         </div>
         <!-- Book Image And Book Detail -->
         <div class="row mx-auto mb-5" style="max-width: 688px;">
             <!-- Book Image -->
             <div class="col-12 col-md-6 px-0 mb-5 mb-md-0 text-center text-md-start">
-                <img src="./img/a.png" alt="" width="312px" height="441px" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 27px 0px; max-width: 100%;">
+                <img src="./publishers/<?= $row["BookCoverPath"] ?>" alt="" width="312px" height="441px" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 27px 0px; max-width: 100%;">
             </div>
             <!-- Book Detail -->
             <div class="col-12 col-md-6 px-0 ps-md-12-px">
                 <!-- รายละเอียด ด้านบน -->
                 <div class="bg-body-tertiary rounded-3 p-4 mb-4">
                     <!-- ผู้แต่ง -->
-                    <div class="d-flex justify-content-between mb-3">
-                        <span class="me-2" style="min-width: 38px;">ผู้แต่ง</span>
-                        <a href="#" class="text-break">TEST DEMO</a>
-                    </div>
+                    <?php if ($row["AuthorName"] != NULL) { ?>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="me-2" style="min-width: 38px;">ผู้แต่ง</span>
+                            <a href="search.php?AuthorName=<?= $row["AuthorName"] ?>" class="link-success link-underline-opacity-0 text-break"><?= $row["AuthorName"] ?></a>
+                        </div>
+                    <?php } ?>
                     <!-- ผู้วาด -->
-                    <div class="d-flex justify-content-between mb-3">
-                        <span class="me-2" style="min-width: 36px;">ผู้วาด</span>
-                        <a href="#" class="text-break">TEST DEMO</a>
-                    </div>
+                    <?php if ($row["PainterName"] != NULL) { ?>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="me-2" style="min-width: 36px;">ผู้วาด</span>
+                            <a href="search.php?PainterName=<?= $row["PainterName"] ?>" class="link-success link-underline-opacity-0 text-break"><?= $row["PainterName"] ?></a>
+                        </div>
+                    <?php } ?>
                     <!-- หมวดหมู่ -->
                     <div class="d-flex justify-content-between mb-3">
                         <span class="me-2" style="min-width: 59px;">หมวดหมู่</span>
-                        <a href="#" class="text-break">TEST DEMO</a>
+                        <a href="search.php?Category=<?= $row["Category"] ?>" class="link-success link-underline-opacity-0 text-break"><?= $row["Category"] ?></a>
                     </div>
                     <!-- สำนักพิมพ์ -->
                     <div class="d-flex justify-content-between mb-3">
                         <span class="me-2" style="min-width: 70px;">สำนักพิมพ์</span>
-                        <a href="#" class="text-break">TEST DEMO</a>
+                        <a href="search.php?PublisherName=<?= $row["PublisherName"] ?>" class="link-success link-underline-opacity-0 text-break"><?= $row["PublisherName"] ?></a>
                     </div>
                     <!-- คะแนน -->
                     <div class="text-center" style="color: orange;">
-                        <span class="me-2 fs-4">4.94</span><span>เต็ม 5</span>
+                        <span class="me-2 fs-4"><?= $row["Rating"] ?></span><span>เต็ม 5</span>
                     </div>
                     <!-- ดาว -->
                     <div class="text-center mb-1">
-                        <span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i></span>
+                        <?php
+                        if ($row["Rating"] == 0) {
+                            echo '<span style="color: orange;"><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 0.5) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-half fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 1) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 1.5) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-half fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 2) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 2.5) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-half fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 3) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 3.5) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-half fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 4) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star fs-4"></i></span>';
+                        } else if ($row["Rating"] <= 4.5) {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-half fs-4"></i></span>';
+                        } else {
+                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i><i class="bi bi-star-fill fs-4"></i></span>';
+                        }
+                        ?>
                     </div>
                     <!-- ผู้ให้คะแนน -->
                     <div class="text-center">
-                        <span class="text-body-tertiary">ผู้ให้คะแนน 1 คน</span>
+                        <span class="text-body-tertiary">ผู้ให้คะแนน <?= $row["NumberOfRaters"] ?> คน</span>
                     </div>
                 </div>
                 <!-- ปุ่มทดลองอ่าน และ ปุ่มซื้อ -->
                 <div class="d-flex mb-5">
-                    <a href="#" class="btn btn-lg border-success rounded-pill me-2" style="min-width: 129px; width: 41%;" role="button">ทดลองอ่าน</a>
-                    <a href="./cart.php" class="btn btn-lg btn-success rounded-pill" style="min-width: 159px; width: 59%;">ซื้อ 149 บาท</a>
+                    <a href="./publishers/<?= $row["BookSamplePath"] ?>" class="d-flex btn border-success rounded-pill me-2 justify-content-center align-items-center" style="width: 41%; height: 48px;" role="button">ทดลองอ่าน</a>
+                    <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center" style="width: 59%; height: 48px;" role="button">ซื้อ <?= $row["Price"] ?> บาท</a>
                 </div>
                 <!-- ซีรีส์ -->
-                <div class="d-flex justify-content-between border-bottom pt-2 pb-1">
-                    <span class="text-body-tertiary me-2" style="min-width: 28px;">ซีรีส์</span>
-                    <span class="text-break">5555</span>
-                </div>
+                <?php if ($row["Series"] != NULL) { ?>
+                    <div class="d-flex justify-content-between border-bottom pt-2 pb-1">
+                        <span class="text-body-tertiary me-2" style="min-width: 28px;">ซีรีส์</span>
+                        <a href="search.php?Series=<?= $row["Series"] ?>" class="link-dark link-underline-opacity-0 text-break"><?= $row["Series"] ?></a>
+                    </div>
+                <?php } ?>
                 <!-- ประเภทไฟล์ -->
                 <div class="d-flex justify-content-between border-bottom pt-2 pb-1">
                     <span class="text-body-tertiary me-2" style="min-width: 81px;">ประเภทไฟล์</span>
-                    <span class="text-break">5555</span>
+                    <span class="text-break">pdf</span>
                 </div>
                 <!-- วันที่วางขาย -->
+                <?php function DateThai($strDate)
+                {
+                    $strYear = date("Y", strtotime($strDate)) + 543;
+                    $strMonth = date("n", strtotime($strDate));
+                    $strDay = date("j", strtotime($strDate));
+                    $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+                    $strMonthThai = $strMonthCut[$strMonth];
+                    return "$strDay $strMonthThai $strYear";
+                } ?>
                 <div class="d-flex justify-content-between border-bottom pt-2 pb-1">
                     <span class="text-body-tertiary me-2" style="min-width: 81px;">วันที่วางขาย</span>
-                    <span class="text-break">5555</span>
+                    <span class="text-break"><?= DateThai($row["ReleaseDate"]) ?></span>
                 </div>
                 <!-- จำนวนหน้า -->
                 <div class="d-flex justify-content-between border-bottom pt-2 pb-1">
                     <span class="text-body-tertiary me-2" style="min-width: 73px;">จำนวนหน้า</span>
-                    <span class="text-break">5555</span>
+                    <span class="text-break"><?= $row["Page"] ?> หน้า</span>
                 </div>
                 <!-- ราคาปก -->
-                <div class="d-flex justify-content-between border-bottom pt-2 pb-1">
-                    <span class="text-body-tertiary me-2" style="min-width: 52px;">ราคาปก</span>
-                    <span class="text-break">5555</span>
-                </div>
+                <?php if ($row["BookCoverPrice"] != NULL) { ?>
+                    <div class="d-flex justify-content-between border-bottom pt-2 pb-1">
+                        <span class="text-body-tertiary me-2" style="min-width: 52px;">ราคาปก</span>
+                        <span class="text-break"><?= $row["BookCoverPrice"] ?> บาท</span>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <!-- Book Recommendation Article -->
-        <div class="row mx-auto" style="max-width: 800px;">
-            <div class="col p-0">
-                <span class="text-break">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt saepe nobis quod repellat placeat dolorem reiciendis alias ab. Quod, error et rerum magni soluta ipsam voluptatibus maiores ut qui eum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vel facilis nostrum velit dolores aperiam repellendus officia totam perspiciatis? In aliquid mollitia fugiat modi corrupti? Perspiciatis numquam nihil velit sint.</span>
+        <?php if ($row["BookDetails"] != NULL) { ?>
+            <div class="row mx-auto" style="max-width: 800px;">
+                <div class="col p-0">
+                    <span class="text-break"><?= $row["BookDetails"] ?></span>
+                </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 </body>
 

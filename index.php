@@ -1,3 +1,5 @@
+<?php require "connect.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,12 +54,14 @@
             </li>
             <!-- Search -->
             <li class="nav-item mt-5 mb-4">
-              <div class="input-group">
-                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
-                <button class="btn border search" type="button" id="button-addon2">
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
+              <form action="search.php">
+                <div class="input-group">
+                  <input type="text" name="BookName" class="form-control" style="height: 40px;" placeholder="ค้นหาชื่อหนังสือ">
+                  <button class="btn border search" type="submit" id="button-addon2">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </form>
             </li>
             <!-- Dropdown light mode or dark mode ยังไม่รู้จะจัดวางยังไงดี -->
             <!-- <li class="nav-item">
@@ -79,12 +83,14 @@
           <ul class="navbar-nav d-none d-lg-flex">
             <!-- Search -->
             <li class="nav-item me-3 align-self-end">
-              <div class="input-group" style="width: 280px;">
-                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
-                <button class="btn border search" type="button" id="button-addon2">
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
+              <form action="search.php">
+                <div class="input-group" style="width: 280px;">
+                  <input type="text" name="BookName" class="form-control" style="height: 40px;" placeholder="ค้นหาชื่อหนังสือ">
+                  <button class="btn border search" type="submit" id="button-addon2">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </form>
             </li>
             <!-- Cart -->
             <li class="nav-item me-3">
@@ -186,56 +192,22 @@
     </div>
     <!-- ส่วน Card -->
     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 mxw-row-mobile mxw-row-desktop mx-auto">
-      <div class="col">
-        <div class="card w-100 h-100">
-          <a href="./detail.php">
-            <img src="./img/a.png" class="card-img-top border border-bottom" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-            </div>
-        </div>
-        </a>
-      </div>
-      <div class="col">
-        <div class="card w-100 h-100">
-          <img src="./img/b.png" class="card-img-top border border-bottom" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
+      <?php
+      $stmt = $conn->prepare("SELECT * FROM book");
+      $stmt->execute();
+      while ($row = $stmt->fetch()) {
+      ?>
+        <div class="col">
+          <div class="card w-100 h-100">
+            <a href="./detail.php?BookId=<?= $row["BookId"] ?>" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
+              <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top border-bottom" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title"><?= $row["BookName"] ?></h5>
+              </div>
           </div>
+          </a>
         </div>
-      </div>
-      <div class="col">
-        <div class="card w-100 h-100">
-          <img src="./img/c.png" class="card-img-top border border-bottom" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card w-100 h-100">
-          <img src="./img/d.png" class="card-img-top border border-bottom" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card w-100 h-100">
-          <img src="./img/e.png" class="card-img-top border border-bottom" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card w-100 h-100">
-          <img src="./img/circle.png" class="card-img-top border border-bottom" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-          </div>
-        </div>
-      </div>
+      <?php } ?>
     </div>
   </div>
 </body>

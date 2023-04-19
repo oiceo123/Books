@@ -1,3 +1,34 @@
+<?php
+session_start();
+
+if (!empty($_GET["action"])) {
+    if ($_GET["action"] == "add") {
+
+        $BookId = $_GET["BookId"];
+
+        $cart_item = array(
+            "BookId" => $BookId,
+            "BookName" => $_GET["BookName"],
+            "Price" => $_GET["Price"],
+            "BookCoverPath" => $_GET["BookCoverPath"]
+        );
+
+        // ถ้ายังไม่มีสินค้าใดๆในรถเข็น
+        if (empty($_SESSION['cart'])) {
+            $_SESSION['cart'] = array();
+        }
+
+        // หากยังไม่เคยเลือกสินค้นนั้นจะ
+        if (!array_key_exists($BookId, $_SESSION['cart'])) {
+            $_SESSION['cart'][$BookId] = $cart_item;
+        }
+    } else if ($_GET["action"] == "delete") {
+        $BookId = $_GET["BookId"];
+        unset($_SESSION['cart'][$BookId]);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,12 +83,14 @@
                         </li>
                         <!-- Search -->
                         <li class="nav-item mt-5 mb-4">
-                            <div class="input-group">
-                                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
-                                <button class="btn border search" type="button" id="button-addon2">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </div>
+                            <form action="search.php">
+                                <div class="input-group">
+                                    <input type="text" name="BookName" class="form-control" style="height: 40px;" placeholder="ค้นหาชื่อหนังสือ">
+                                    <button class="btn border search" type="submit" id="button-addon2">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </li>
                         <!-- Dropdown light mode or dark mode ยังไม่รู้จะจัดวางยังไงดี -->
                         <!-- <li class="nav-item">
@@ -79,12 +112,14 @@
                     <ul class="navbar-nav d-none d-lg-flex">
                         <!-- Search -->
                         <li class="nav-item me-3 align-self-end">
-                            <div class="input-group" style="width: 280px;">
-                                <input type="text" class="form-control" style="height: 40px;" placeholder="Search">
-                                <button class="btn border search" type="button" id="button-addon2">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </div>
+                            <form action="search.php">
+                                <div class="input-group" style="width: 280px;">
+                                    <input type="text" name="BookName" class="form-control" style="height: 40px;" placeholder="ค้นหาชื่อหนังสือ">
+                                    <button class="btn border search" type="submit" id="button-addon2">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </li>
                         <!-- Cart -->
                         <li class="nav-item me-3">
@@ -147,7 +182,7 @@
     </div>
 
     <!-- Content -->
-    <div class="container" style="margin-top: 141.5px; max-width: 700px;">
+    <div class="container pb-md-4" style="margin-top: 141.5px; max-width: 700px;">
         <!-- Head -->
         <div class="row border-bottom text-center">
             <div class="col">
@@ -158,58 +193,79 @@
             </div>
         </div>
         <!-- Book Items -->
-        <div class="row border-bottom mb-3">
-            <div class="col">
-                <div class="d-flex align-items-center py-3">
-                    <!-- Checkbox -->
-                    <div class="form-check me-2">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                    </div>
-                    <!-- Image -->
-                    <img src="./img/a.png" alt="" width="57px" height="60px" class="border me-3">
-                    <!-- Book name and Price -->
-                    <div class="align-self-start">
-                        <!-- Book name -->
-                        <div class="fs-5 fw-bold text-break">
-                            A Book
+        <?php if (!empty($_SESSION["cart"])) { ?>
+            <?php foreach ($_SESSION["cart"] as $item) { ?>
+                <div class="row border-bottom">
+                    <div class="col">
+                        <div class="d-flex align-items-center py-3">
+                            <!-- Checkbox -->
+                            <div class="form-check me-2">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                            </div>
+                            <!-- Image -->
+                            <img src="./publishers/<?= $item["BookCoverPath"] ?>" alt="" width="57px" height="60px" class="border me-3">
+                            <!-- Book name and Price -->
+                            <div class="align-self-start">
+                                <!-- Book name -->
+                                <div class="fs-5 fw-bold text-break">
+                                    <?= $item["BookName"] ?>
+                                </div>
+                                <!-- Book price -->
+                                <div class="text-body-tertiary" style="font-size: 0.9rem;">
+                                    ฿<?= $item["Price"] ?>
+                                </div>
+                            </div>
+                            <!-- Delete Button -->
+                            <a href="?action=delete&BookId=<?= $item["BookId"] ?>" class="btn btn-outline-danger ms-auto px-3 px-sm-4 py-1">ลบ</a>
                         </div>
-                        <!-- Book price -->
-                        <div class="text-body-tertiary" style="font-size: 0.9rem;">
-                            ฿69
-                        </div>
                     </div>
-                    <!-- Delete Button -->
-                    <button class="btn btn-outline-danger ms-auto px-3 px-sm-4 py-1">ลบ</button>
                 </div>
-            </div>
-        </div>
+            <?php } ?>
+        <?php } ?>
         <!-- Select All -->
-        <div class="row mb-5">
-            <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        เลือกทั้งหมด
-                    </label>
+        <?php if (!empty($_SESSION["cart"])) { ?>
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            เลือกทั้งหมด
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
         <!-- Link to book store -->
-        <div class="row mb-4 text-center">
+        <div class="row mt-5 text-center">
             <div class="col">
                 <a href="./" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">เลือกซื้อหนังสือเล่มอื่นต่อ</a>
             </div>
         </div>
         <!-- Total amount to be paid -->
-        <div class="row p-4 bg-body-tertiary justify-content-center">
+        <div class="row mt-4 p-4 bg-body-tertiary justify-content-center">
             <!-- Total amount -->
+            <?php
+            $total = 0;
+
+            if (!empty($_SESSION["cart"])) {
+                foreach ($_SESSION["cart"] as $item) {
+                    $total = $total + $item["Price"];
+                }
+            }
+            ?>
             <div class="col-12 mb-3 text-center">
-                <h4>ยอดชำระ <span class="fw-bold">฿69</span></h4>
+                <h4>ยอดชำระ <span class="fw-bold">฿<?= $total ?></span></h4>
             </div>
             <!-- Link to payment page -->
-            <div class="col" style="max-width: 250px;">
-                <a href="#" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2" role="button">ไปหน้าชำระเงิน</a>
-            </div>
+            <?php if (!empty($_SESSION["cart"])) { ?>
+                <div class="col" style="max-width: 250px;">
+                    <a href="#" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2" role="button">ไปหน้าชำระเงิน</a>
+                </div>
+            <?php } else { ?>
+                <div class="col" style="max-width: 250px;">
+                    <a href="#" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2 disabled" role="button">ไปหน้าชำระเงิน</a>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </body>
