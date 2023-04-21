@@ -21,6 +21,7 @@
         session_start();
         session_regenerate_id(); /* ป้องกัน Session Fixation */    
         $_SESSION["username"] = $row["Username"];
+        $_SESSION["publisherName"] = $row["PublisherName"];
         echo "<script>window.location.href='http://localhost/Project_Books/';</script>";
     }
     else {
