@@ -1,4 +1,7 @@
-<?php require "connect.php"; ?>
+<?php
+require "connect.php";
+session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -107,9 +110,25 @@
             </li>
             <!-- Login -->
             <li class="nav-item me-3">
-              <a class="nav-link pb-0" href="./login.php">
-                <i class="bi bi-person-circle" style="font-size: 25px;"></i>
-              </a>
+              <?php if (empty($_SESSION["username"])) { ?>
+                <a class="nav-link pb-0" href="./login.php">
+                  <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                </a>
+              <?php } else { ?>
+                <div class="dropdown">
+                  <button class="btn dropdown-toggle pb-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end mt-2">
+                    <?php if (empty($_SESSION["publisherName"])) { ?>
+                      <li><a class="dropdown-item text-secondary" href="./signup_publisher.php">สมัครขายหนังสือ</a></li>
+                    <?php } else { ?>
+                      <li><a class="dropdown-item text-secondary" href="./show_sell_book.php">ขายหนังสือ</a></li>
+                    <?php } ?>
+                    <li><a class="dropdown-item border-top mt-3 link-danger text-center" href="./logout.php">ออกจากระบบ</a></li>
+                  </ul>
+                </div>
+              <?php } ?>
             </li>
             <!-- Dropdown light mode or dark mode -->
             <li class="nav-item">
