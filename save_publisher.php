@@ -18,6 +18,13 @@
 
     if ($stmt->execute()) {
         $_SESSION["publisherName"] = $publisherName;
+        $folder = "publishers/$publisherName";
+        if (!is_dir($folder)) {
+            mkdir($folder);
+            mkdir($folder . "/book");
+            mkdir($folder . "/book_cover");
+            mkdir($folder . "/book_sample");
+        }
         echo "<script>
                 alert('สมัครเป็นผู้ขายสำเร็จ');
                 window.location.href='http://localhost/Project_Books/';
