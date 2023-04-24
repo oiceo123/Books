@@ -204,8 +204,9 @@ session_start();
                                 ฿<?= $row["Price"] ?>
                             </div>
                         </div>
+                        <!-- Edit Button -->
+                        <a href="./edit_sell_book.php?BookId=<?= $row["BookId"] ?>" class="btn btn-outline-success ms-auto me-2 px-3 px-sm-4 py-1">แก้ไข</a>
                         <!-- Delete Button -->
-                        <a href="BookId=<?= $row["BookId"] ?>" class="btn btn-outline-success ms-auto me-2 px-3 px-sm-4 py-1">แก้ไข</a>
                         <a href="BookId=<?= $row["BookId"] ?>" class="btn btn-outline-danger px-3 px-sm-4 py-1">ลบ</a>
                     </div>
                 </div>
