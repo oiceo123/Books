@@ -15,6 +15,17 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="show_sell_book.css">
     <title>Sell Book</title>
+    <script>
+        let selectedBookId;
+        
+        function passBookId(bookId) {
+            selectedBookId = bookId;
+        }
+
+        function deleteBook() {
+            document.location = "delete_sell_book.php?BookId=" + selectedBookId;
+        }
+    </script>
 </head>
 
 <body>
@@ -207,11 +218,30 @@ session_start();
                         <!-- Edit Button -->
                         <a href="./edit_sell_book.php?BookId=<?= $row["BookId"] ?>" class="btn btn-outline-success ms-auto me-2 px-3 px-sm-4 py-1">แก้ไข</a>
                         <!-- Delete Button -->
-                        <a href="BookId=<?= $row["BookId"] ?>" class="btn btn-outline-danger px-3 px-sm-4 py-1">ลบ</a>
+                        <a class="btn btn-outline-danger px-3 px-sm-4 py-1" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="passBookId(<?= $row['BookId'] ?>)">ลบ</a>
                     </div>
                 </div>
             </div>
         <?php } ?>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">แจ้งเตือนการลบ</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-5">
+                    <span style="font-size: 1.1rem;">คุณแน่ใจที่จะลบหนังสือเล่มนี้ใช่ไหม</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" style="padding-left: 2.25rem; padding-right: 2.25rem;" data-bs-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-danger" style="padding-left: 1.75rem; padding-right: 1.75rem;" onclick="deleteBook()">ลบ</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
