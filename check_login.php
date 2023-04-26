@@ -20,6 +20,7 @@
     if (password_verify($password, $row["Password"])) {
         session_start();
         session_regenerate_id(); /* ป้องกัน Session Fixation */    
+        $_SESSION["userId"] = $row["UserId"];
         $_SESSION["username"] = $row["Username"];
         $_SESSION["publisherName"] = $row["PublisherName"];
         echo "<script>window.location.href='http://localhost/Project_Books/';</script>";
