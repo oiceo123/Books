@@ -120,6 +120,7 @@ session_start();
                     <i class="bi bi-person-circle" style="font-size: 25px;"></i>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end mt-2">
+                    <li><a class="dropdown-item text-secondary" href="./book_of_user.php">หนังสือของฉัน</a></li>
                     <?php if (empty($_SESSION["publisherName"])) { ?>
                       <li><a class="dropdown-item text-secondary" href="./signup_publisher.php">สมัครขายหนังสือ</a></li>
                     <?php } else { ?>
