@@ -29,16 +29,22 @@ if (!empty($_GET["action"])) {
     }
 }
 
-$stutusCart = 0;    // 0 = False
-$statusCheckAll = 1;    // 1 = True
+// 0 = False
+// 1 = True
 
-if (!empty($_SESSION["cart"])) {
-    $stutusCart = 1;
+$statusLogin = 0;
+
+if (!empty($_SESSION["username"])) {
+    $statusLogin = 1;
 }
 
-foreach ($_SESSION["cart"] as $item) {
-    if (empty($item["Checked"])) {
-        $statusCheckAll = 0;
+$statusCheckAll = 1;
+
+if (!empty($_SESSION["cart"])) {
+    foreach ($_SESSION["cart"] as $item) {
+        if (empty($item["Checked"])) {
+            $statusCheckAll = 0;
+        }
     }
 }
 ?>
@@ -77,11 +83,17 @@ foreach ($_SESSION["cart"] as $item) {
             }
         }
 
-        function changeCheckAllStatus() {
-            let statusCart = <?= $stutusCart ?>;
-            if (statusCart == 1) {
+        function checkLoginAndCheckAllStatus() {
+            let statusLogin = <?= $statusLogin ?>;
+            if (statusLogin == 0) {
+                const myModal = new bootstrap.Modal(document.getElementById('loginModal'), {
+                    keyboard: false,
+                    backdrop: 'static'
+                })
+                myModal.show();
+            } else {
                 let statusCheckAll = <?= $statusCheckAll ?>;
-                if (statusCheckAll == 1) {
+                if (statusCheckAll == 1 && document.getElementById("checkAll") != null) {
                     document.getElementById("checkAll").checked = true;
                 }
             }
@@ -89,7 +101,7 @@ foreach ($_SESSION["cart"] as $item) {
     </script>
 </head>
 
-<body onload="changeCheckAllStatus()">
+<body onload="checkLoginAndCheckAllStatus()">
     <!-- Navbar -->
     <div class="fixed-top">
         <!-- Top Navbar -->
@@ -332,6 +344,18 @@ foreach ($_SESSION["cart"] as $item) {
                     <a href="#" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2 disabled" role="button">ไปหน้าชำระเงิน</a>
                 </div>
             <?php } ?>
+            <!-- Login Modal -->
+            <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content pb-3">
+                        <div class="modal-body text-center">
+                            <i class="bi bi-exclamation-circle" style="font-size: 6rem; color: orange;"></i>
+                            <h4 class="mb-5">กรุณาเข้าสู่ระบบ</h4>
+                            <a href="./login.php"><button type="button" class="btn btn-success px-4">เข้าสู่ระบบ</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
