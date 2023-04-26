@@ -10,7 +10,8 @@ if (!empty($_GET["action"])) {
             "BookId" => $BookId,
             "BookName" => $_GET["BookName"],
             "Price" => $_GET["Price"],
-            "BookCoverPath" => $_GET["BookCoverPath"]
+            "BookCoverPath" => $_GET["BookCoverPath"],
+            "Checked" => true
         );
 
         // ถ้ายังไม่มีสินค้าใดๆในรถเข็น
@@ -27,6 +28,19 @@ if (!empty($_GET["action"])) {
         unset($_SESSION['cart'][$BookId]);
     }
 }
+
+$stutusCart = 0;    // 0 = False
+$statusCheckAll = 1;    // 1 = True
+
+if (!empty($_SESSION["cart"])) {
+    $stutusCart = 1;
+}
+
+foreach ($_SESSION["cart"] as $item) {
+    if (empty($item["Checked"])) {
+        $statusCheckAll = 0;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,9 +55,41 @@ if (!empty($_GET["action"])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./cart.css">
     <title>Cart</title>
+    <script>
+        let xmlHttp;
+
+        function toggleCheckValue(bookId) {
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = showCheckboxAllStatus;
+
+            let url = "toggle_checked_book.php?bookId=" + bookId;
+            xmlHttp.open("GET", url);
+            xmlHttp.send();
+        }
+
+        function showCheckboxAllStatus() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                if (xmlHttp.responseText == "okay") {
+                    document.getElementById("checkAll").checked = true;
+                } else {
+                    document.getElementById("checkAll").checked = false;
+                }
+            }
+        }
+
+        function changeCheckAllStatus() {
+            let statusCart = <?= $stutusCart ?>;
+            if (statusCart == 1) {
+                let statusCheckAll = <?= $statusCheckAll ?>;
+                if (statusCheckAll == 1) {
+                    document.getElementById("checkAll").checked = true;
+                }
+            }
+        }
+    </script>
 </head>
 
-<body>
+<body onload="changeCheckAllStatus()">
     <!-- Navbar -->
     <div class="fixed-top">
         <!-- Top Navbar -->
@@ -136,9 +182,25 @@ if (!empty($_GET["action"])) {
                         </li>
                         <!-- Login -->
                         <li class="nav-item me-3">
-                            <a class="nav-link pb-0" href="./login.php">
-                                <i class="bi bi-person-circle" style="font-size: 25px;"></i>
-                            </a>
+                            <?php if (empty($_SESSION["username"])) { ?>
+                                <a class="nav-link pb-0" href="./login.php">
+                                    <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                                </a>
+                            <?php } else { ?>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle pb-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end mt-2">
+                                        <?php if (empty($_SESSION["publisherName"])) { ?>
+                                            <li><a class="dropdown-item text-secondary" href="./signup_publisher.php">สมัครขายหนังสือ</a></li>
+                                        <?php } else { ?>
+                                            <li><a class="dropdown-item text-secondary" href="./show_sell_book.php">ขายหนังสือ</a></li>
+                                        <?php } ?>
+                                        <li><a class="dropdown-item border-top mt-3 link-danger text-center" href="./logout.php">ออกจากระบบ</a></li>
+                                    </ul>
+                                </div>
+                            <?php } ?>
                         </li>
                         <!-- Dropdown light mode or dark mode -->
                         <li class="nav-item">
@@ -200,7 +262,11 @@ if (!empty($_GET["action"])) {
                         <div class="d-flex align-items-center py-3">
                             <!-- Checkbox -->
                             <div class="form-check me-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                                <?php if (!empty($item["Checked"])) { ?>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="toggleCheckValue(<?= $item['BookId'] ?>)" checked>
+                                <?php } else { ?>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="toggleCheckValue(<?= $item['BookId'] ?>)">
+                                <?php } ?>
                             </div>
                             <!-- Image -->
                             <img src="./publishers/<?= $item["BookCoverPath"] ?>" alt="" width="57px" height="60px" class="border me-3">
@@ -227,7 +293,7 @@ if (!empty($_GET["action"])) {
             <div class="row mt-3">
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                        <input id="checkAll" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             เลือกทั้งหมด
                         </label>
@@ -256,10 +322,10 @@ if (!empty($_GET["action"])) {
             <div class="col-12 mb-3 text-center">
                 <h4>ยอดชำระ <span class="fw-bold">฿<?= $total ?></span></h4>
             </div>
-            <!-- Link to payment page -->
+            <!-- Link to send book to user -->
             <?php if (!empty($_SESSION["cart"])) { ?>
                 <div class="col" style="max-width: 250px;">
-                    <a href="#" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2" role="button">ไปหน้าชำระเงิน</a>
+                    <a href="./send_book_to_user.php" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center p-2" role="button">ไปหน้าชำระเงิน</a>
                 </div>
             <?php } else { ?>
                 <div class="col" style="max-width: 250px;">
