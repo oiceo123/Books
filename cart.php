@@ -47,6 +47,16 @@ if (!empty($_SESSION["cart"])) {
         }
     }
 }
+
+$total = 0;
+
+if (!empty($_SESSION["cart"])) {
+    foreach ($_SESSION["cart"] as $item) {
+        if (!empty($item["Checked"])) {
+            $total = $total + $item["Price"];
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +73,7 @@ if (!empty($_SESSION["cart"])) {
     <title>Cart</title>
     <script>
         let xmlHttp;
+        let xmlHttp2;
 
         function toggleCheckValue(bookId) {
             xmlHttp = new XMLHttpRequest();
@@ -77,14 +88,19 @@ if (!empty($_SESSION["cart"])) {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
                 if (xmlHttp.responseText == "okay") {
                     document.getElementById("checkAll").checked = true;
+                    calTotalAmount();
                 } else {
                     document.getElementById("checkAll").checked = false;
+                    calTotalAmount();
                 }
             }
         }
 
+        /* Init Value */
         function checkLoginAndCheckAllStatus() {
             let statusLogin = <?= $statusLogin ?>;
+            let total = <?= $total ?>;
+            document.getElementById("totalAmount").innerText = Number(total).toFixed(2);
             if (statusLogin == 0) {
                 const myModal = new bootstrap.Modal(document.getElementById('loginModal'), {
                     keyboard: false,
@@ -96,6 +112,21 @@ if (!empty($_SESSION["cart"])) {
                 if (statusCheckAll == 1 && document.getElementById("checkAll") != null) {
                     document.getElementById("checkAll").checked = true;
                 }
+            }
+        }
+
+        function calTotalAmount() {
+            xmlHttp2 = new XMLHttpRequest();
+            xmlHttp2.onreadystatechange = showTotalAmount;
+
+            let url = "cal_total_amount.php";
+            xmlHttp2.open("GET", url);
+            xmlHttp2.send();
+        }
+
+        function showTotalAmount() {
+            if (xmlHttp2.readyState == 4 && xmlHttp2.status == 200) {
+                document.getElementById("totalAmount").innerText = Number(xmlHttp2.responseText).toFixed(2);
             }
         }
     </script>
@@ -322,17 +353,8 @@ if (!empty($_SESSION["cart"])) {
         <!-- Total amount to be paid -->
         <div class="row mt-4 p-4 bg-body-tertiary justify-content-center">
             <!-- Total amount -->
-            <?php
-            $total = 0;
-
-            if (!empty($_SESSION["cart"])) {
-                foreach ($_SESSION["cart"] as $item) {
-                    $total = $total + $item["Price"];
-                }
-            }
-            ?>
             <div class="col-12 mb-3 text-center">
-                <h4>ยอดชำระ <span class="fw-bold">฿<?= $total ?></span></h4>
+                <h4>ยอดชำระ <span class="fw-bold">฿<span id="totalAmount"></span></span></h4>
             </div>
             <!-- Link to send book to user -->
             <?php if (!empty($_SESSION["cart"])) { ?>
