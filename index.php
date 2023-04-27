@@ -219,7 +219,7 @@ session_start();
       ?>
         <div class="col">
           <div class="card w-100 h-100">
-            <a href="./detail.php?BookId=<?= $row["BookId"] ?>" target="_blank" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
+            <a href="./detail.php?BookId=<?= $row["BookId"] ?>" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
               <div class="text-center">
                 <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top" style="aspect-ratio: 1 / 1.25" alt="..." />
               </div>
