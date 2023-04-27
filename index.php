@@ -102,9 +102,11 @@ session_start();
                 <!-- Cart Icon -->
                 <i class="bi bi-cart" style="font-size: 25px;">
                   <!-- Badges -->
-                  <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 22px;">
-                    1
-                  </span>
+                  <?php if (!empty($_SESSION["cart"])) { ?>
+                    <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 22px;">
+                      <?= count($_SESSION["cart"]) ?>
+                    </span>
+                  <?php } ?>
                 </i>
               </a>
             </li>
