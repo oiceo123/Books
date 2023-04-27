@@ -192,11 +192,10 @@ if (!$stmt->execute()) {
             while ($row = $stmt->fetch()) {
             ?>
                 <div class="col">
-                    <a href="publishers/<?= $row["BookPath"] ?>" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
+                    <a href="publishers/<?= $row["BookPath"] ?>" target="_blank" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
                         <div class="card w-100 h-100">
-                            <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top border-bottom" alt="..." />
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $row["BookName"] ?></h5>
+                            <div class="text-center">
+                                <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top" style="aspect-ratio: 1 / 1.25" alt="..." />
                             </div>
                         </div>
                     </a>

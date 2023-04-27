@@ -183,7 +183,7 @@
         exit;
     }
     ?>
-    <div class="container" style="margin-top: 150px;">
+    <div class="container pb-5" style="margin-top: 150px;">
         <div class="row text-center mb-4">
             <h3>หนังสือที่พบจำนวน <?= $stmt->rowCount() ?> เล่ม</h3>
         </div>
@@ -191,13 +191,15 @@
             <?php while ($row = $stmt->fetch()) { ?>
                 <div class="col">
                     <div class="card w-100 h-100">
-                        <a href="./detail.php?BookId=<?= $row["BookId"] ?>" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
-                            <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top border-bottom" alt="..." />
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $row["BookName"] ?></h5>
+                        <a href="./detail.php?BookId=<?= $row["BookId"] ?>" target="_blank" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
+                            <div class="text-center">
+                                <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top" style="aspect-ratio: 1 / 1.25" alt="..." />
                             </div>
+                            <div class="card-body border-top px-2 pt-2">
+                                <span class="card-title fw-bold"><?= $row["BookName"] ?></span>
+                            </div>
+                        </a>
                     </div>
-                    </a>
                 </div>
             <?php } ?>
         </div>
