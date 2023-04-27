@@ -8,6 +8,7 @@
     foreach ($_SESSION["cart"] as $item) {
         if (empty($item["Checked"])) {
             echo "denied";
+            exit;
         }
     }
 
