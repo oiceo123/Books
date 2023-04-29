@@ -262,7 +262,7 @@ if (!empty($_SESSION["userId"])) {
                             <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center" style="width: 59%; height: 48px;" role="button">เปิด</a>
                         <?php } ?>
                     <?php } else { ?>
-                        <a href="" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center disabled" style="width: 59%; height: 48px;" role="button">ซื้อ <?= $row["Price"] ?> บาท</a>
+                        <a href="cart.php" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center" style="width: 59%; height: 48px;" role="button">ซื้อ <?= $row["Price"] ?> บาท</a>
                     <?php } ?>
                 </div>
                 <!-- ซีรีส์ -->

@@ -273,7 +273,7 @@ if (!empty($_SESSION["userId"])) {
                       <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">เปิด</a>
                     <?php } ?>
                   <?php } else { ?>
-                    <a href="" class="d-flex btn btn-outline-success justify-content-center align-items-center disabled" role="button">฿<?= $row["Price"] ?></a>
+                    <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
                   <?php } ?>
                 </div>
               </div>
