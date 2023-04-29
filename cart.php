@@ -103,8 +103,7 @@ if (!empty($_SESSION["cart"])) {
             document.getElementById("totalAmount").innerText = Number(total).toFixed(2);
             if (statusLogin == 0) {
                 const myModal = new bootstrap.Modal(document.getElementById('loginModal'), {
-                    keyboard: false,
-                    backdrop: 'static'
+                    keyboard: false
                 })
                 myModal.show();
             } else {
