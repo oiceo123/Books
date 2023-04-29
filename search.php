@@ -1,4 +1,17 @@
-<?php require "connect.php" ?>
+<?php
+require "connect.php";
+session_start();
+
+if (!empty($_SESSION["userId"])) {
+    $stmt = $conn->prepare("SELECT BookId FROM orders WHERE UserId = ?");
+    $stmt->bindParam(1, $_SESSION["userId"]);
+    $stmt->execute();
+    $bookOfUser = array();
+    while ($temp = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        array_push($bookOfUser, $temp["BookId"]);
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -187,16 +200,55 @@
         <div class="row text-center mb-4">
             <h3>หนังสือที่พบจำนวน <?= $stmt->rowCount() ?> เล่ม</h3>
         </div>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 mxw-row-mobile mxw-row-desktop mx-auto">
+        <div class="row row-cols-1 row-col-spacial row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 mxw-row mx-auto">
             <?php while ($row = $stmt->fetch()) { ?>
                 <div class="col">
-                    <div class="card w-100 h-100">
+                    <div class="card w-100 h-100" style="min-width: 194px;">
                         <a href="./detail.php?BookId=<?= $row["BookId"] ?>" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
                             <div class="text-center">
                                 <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top" style="aspect-ratio: 1 / 1.25" alt="..." />
                             </div>
-                            <div class="card-body border-top px-2 pt-2">
+                            <div class="card-body border-top ps-2 pe-1 pt-2 pb-1">
                                 <span class="card-title fw-bold"><?= $row["BookName"] ?></span>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <div class="me-1">
+                                        <?php
+                                        if ($row["Rating"] == 0) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 0.5) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 1) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 1.5) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 2) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 2.5) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 3) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 3.5) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 4) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                                        } else if ($row["Rating"] <= 4.5) {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i></span>';
+                                        } else {
+                                            echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i></span>';
+                                        }
+                                        ?>
+                                        <div class="text-secondary" style="font-size: 0.7rem;">ผู้ให้คะแนน <?= $row["NumberOfRaters"] ?> คน</div>
+                                    </div>
+                                    <?php if (!empty($_SESSION["username"])) { ?>
+                                        <?php if (!in_array($row["BookId"], $bookOfUser)) { ?>
+                                            <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                                        <?php } else { ?>
+                                            <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">เปิด</a>
+                                        <?php } ?>
+                                    <?php } else { ?>
+                                        <a href="" class="d-flex btn btn-outline-success justify-content-center align-items-center disabled" role="button">฿<?= $row["Price"] ?></a>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </a>
                     </div>

@@ -2,14 +2,25 @@
   height: 500px;
 }
 
-@media only screen and (max-width: 576px) {
-  .mxw-row-mobile {
-    max-width: 450px;
+/* ส่วน Card */
+@media only screen and (max-width: 463px) {
+  .mxw-row {
+    max-width: 300px;
+  }
+}
+
+@media only screen and (min-width: 464px) and (max-width: 576px) {
+  .row-col-spacial > * {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+  .mxw-row {
+    max-width: 516px;
   }
 }
 
 @media only screen and (min-width: 1200px) {
-  .mxw-row-desktop {
+  .mxw-row {
     max-width: 1100px;
   }
 }

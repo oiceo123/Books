@@ -1,5 +1,16 @@
 <?php
 require "connect.php";
+session_start();
+
+if (!empty($_SESSION["userId"])) {
+    $stmt = $conn->prepare("SELECT BookId FROM orders WHERE UserId = ?");
+    $stmt->bindParam(1, $_SESSION["userId"]);
+    $stmt->execute();
+    $bookOfUser = array();
+    while ($temp = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        array_push($bookOfUser, $temp["BookId"]);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -244,7 +255,15 @@ require "connect.php";
                 <!-- ปุ่มทดลองอ่าน และ ปุ่มซื้อ -->
                 <div class="d-flex mb-5">
                     <a href="./publishers/<?= $row["BookSamplePath"] ?>" class="d-flex btn border-success rounded-pill me-2 justify-content-center align-items-center" style="width: 41%; height: 48px;" role="button">ทดลองอ่าน</a>
-                    <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center" style="width: 59%; height: 48px;" role="button">ซื้อ <?= $row["Price"] ?> บาท</a>
+                    <?php if (!empty($_SESSION["username"])) { ?>
+                        <?php if (!in_array($row["BookId"], $bookOfUser)) { ?>
+                            <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center" style="width: 59%; height: 48px;" role="button">ซื้อ <?= $row["Price"] ?> บาท</a>
+                        <?php } else { ?>
+                            <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center" style="width: 59%; height: 48px;" role="button">เปิด</a>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <a href="" class="d-flex btn btn-success rounded-pill justify-content-center align-items-center disabled" style="width: 59%; height: 48px;" role="button">ซื้อ <?= $row["Price"] ?> บาท</a>
+                    <?php } ?>
                 </div>
                 <!-- ซีรีส์ -->
                 <?php if ($row["Series"] != NULL) { ?>
