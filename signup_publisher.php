@@ -1,4 +1,7 @@
-<?php require "connect.php"; ?>
+<?php
+require "connect.php";
+session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +93,7 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Navbar Copy -->
     <div class="fixed-top">
         <!-- Top Navbar -->
         <nav class="navbar navbar-expand-lg py-3" style="background-color: rgb(253, 253, 253);">
@@ -105,29 +108,48 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Nav List (xs-lg) -->
                     <ul class="navbar-nav d-flex d-lg-none">
-                        <!-- Login -->
+                        <!-- Login ผ่าน -->
                         <li class="nav-item border-bottom mt-4">
-                            <a class="nav-link" href="./login.php">
-                                <i class="bi bi-person-circle" style="font-size: 25px;"></i>
-                                <span class="ms-2" style="font-size: 20px;">Log In</span>
-                            </a>
+                            <?php if (empty($_SESSION["username"])) { ?>
+                                <a class="nav-link" href="./login.php">
+                                    <i class="bi bi-person-circle" style="font-size: 25px;"></i>
+                                    <span class="ms-2" style="font-size: 20px;">Log In</span>
+                                </a>
+                            <?php } else { ?>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle px-0 w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span><i class="bi bi-person-circle me-1" style="font-size: 25px;"></i><span class="ms-2" style="font-size: 20px;"><?= $_SESSION["displayName"] ?></span></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end mt-2">
+                                        <li><a class="dropdown-item text-secondary" href="./book_of_user.php"><i class="bi bi-book me-2" style="font-size: 18px;"></i>หนังสือของฉัน</a></li>
+                                        <?php if (empty($_SESSION["publisherName"])) { ?>
+                                            <li><a class="dropdown-item text-secondary" href="./signup_publisher.php"><i class="bi bi-person-add me-2" style="font-size: 18px;"></i>สมัครขายหนังสือ</a></li>
+                                        <?php } else { ?>
+                                            <li><a class="dropdown-item text-secondary" href="./show_sell_book.php"><i class="bi bi-file-earmark-plus me-2" style="font-size: 18px;"></i>ขายหนังสือ</a></li>
+                                        <?php } ?>
+                                        <li><a class="dropdown-item border-top mt-3 link-danger" href="./logout.php"><i class="bi bi-box-arrow-in-right me-2" style="font-size: 18px;"></i>ออกจากระบบ</a></li>
+                                    </ul>
+                                </div>
+                            <?php } ?>
                         </li>
-                        <!-- Cart -->
+                        <!-- Cart ผ่าน -->
                         <li class="nav-item border-bottom mt-3">
                             <!-- Link to cart page -->
                             <a class="nav-link position-relative" href="./cart.php">
                                 <!-- Cart Icon -->
                                 <i class="bi bi-cart" style="font-size: 25px;">
                                     <!-- Badges -->
-                                    <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 16px; top: 4px;">
-                                        1
-                                    </span>
+                                    <?php if (!empty($_SESSION["cart"])) { ?>
+                                        <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 16px; top: 4px;">
+                                            <?= count($_SESSION["cart"]) ?>
+                                        </span>
+                                    <?php } ?>
                                 </i>
                                 <!-- Cart Text -->
                                 <span class="ms-2" style="font-size: 20px;">Cart</span>
                             </a>
                         </li>
-                        <!-- Search -->
+                        <!-- Search ผ่าน -->
                         <li class="nav-item mt-5 mb-4">
                             <form action="search.php">
                                 <div class="input-group">
@@ -140,19 +162,19 @@
                         </li>
                         <!-- Dropdown light mode or dark mode ยังไม่รู้จะจัดวางยังไงดี -->
                         <!-- <li class="nav-item">
-              <div class="dropdown">
-                Selected mode
-                <button class="btn dropdown-toggle p-0" style="font-size: 25px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-brightness-high"></i>
-                  <span class="ms-1">Theme</span>
-                </button>
-                Dropdown Menu (Light / Dark)
-                <ul class="dropdown-menu dropdown-menu-end mt-2">
-                  <li class="dropdown-item"><i class="bi bi-brightness-high"></i> Light</li>
-                  <li class="dropdown-item"><i class="bi bi-moon-stars-fill"></i> Dark</li>
-                </ul>
-              </div>
-            </li> -->
+                            <div class="dropdown">
+                                Selected mode
+                                <button class="btn dropdown-toggle p-0" style="font-size: 25px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-brightness-high"></i>
+                                    <span class="ms-1">Theme</span>
+                                </button>
+                                Dropdown Menu (Light / Dark)
+                                <ul class="dropdown-menu dropdown-menu-end mt-2">
+                                    <li class="dropdown-item"><i class="bi bi-brightness-high"></i> Light</li>
+                                    <li class="dropdown-item"><i class="bi bi-moon-stars-fill"></i> Dark</li>
+                                </ul>
+                            </div>
+                        </li> -->
                     </ul>
                     <!-- Nav List (lg-xxl) -->
                     <ul class="navbar-nav d-none d-lg-flex">
@@ -174,9 +196,11 @@
                                 <!-- Cart Icon -->
                                 <i class="bi bi-cart" style="font-size: 25px;">
                                     <!-- Badges -->
-                                    <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 22px;">
-                                        1
-                                    </span>
+                                    <?php if (!empty($_SESSION["cart"])) { ?>
+                                        <span class="position-absolute badge rounded-pill bg-danger" style="font-size: 10px; left: 22px;">
+                                            <?= count($_SESSION["cart"]) ?>
+                                        </span>
+                                    <?php } ?>
                                 </i>
                             </a>
                         </li>
@@ -191,13 +215,18 @@
                                     <button class="btn dropdown-toggle pb-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-person-circle" style="font-size: 25px;"></i>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end mt-2">
+                                    <ul class="dropdown-menu dropdown-menu-end mt-2" style="width: 300px;">
+                                        <li class="dropdown-item d-flex border-bottom pt-2 pb-3">
+                                            <img src="https://cdn.pixabay.com/photo/2016/11/14/17/39/person-1824147_960_720.png" alt="" class="border rounded-circle" width="50px" height="50px">
+                                            <span class="ms-3"><?= $_SESSION["displayName"] ?></span>
+                                        </li>
+                                        <li class="mt-2"><a class="dropdown-item text-secondary" href="./book_of_user.php"><i class="bi bi-book me-2" style="font-size: 18px;"></i>หนังสือของฉัน</a></li>
                                         <?php if (empty($_SESSION["publisherName"])) { ?>
-                                            <li><a class="dropdown-item text-secondary" href="./signup_publisher.php">สมัครขายหนังสือ</a></li>
+                                            <li><a class="dropdown-item text-secondary" href="./signup_publisher.php"><i class="bi bi-person-add me-2" style="font-size: 18px;"></i>สมัครขายหนังสือ</a></li>
                                         <?php } else { ?>
-                                            <li><a class="dropdown-item text-secondary" href="./">ขายหนังสือ</a></li>
+                                            <li><a class="dropdown-item text-secondary" href="./show_sell_book.php"><i class="bi bi-file-earmark-plus me-2" style="font-size: 18px;"></i>ขายหนังสือ</a></li>
                                         <?php } ?>
-                                        <li><a class="dropdown-item border-top mt-3 link-danger text-center" href="./logout.php">ออกจากระบบ</a></li>
+                                        <li><a class="dropdown-item link-danger" href="./logout.php"><i class="bi bi-box-arrow-in-right me-2" style="font-size: 18px;"></i>ออกจากระบบ</a></li>
                                     </ul>
                                 </div>
                             <?php } ?>
@@ -206,13 +235,21 @@
                         <li class="nav-item">
                             <div class="dropdown">
                                 <!-- Selected mode -->
-                                <button class="btn dropdown-toggle border-start pb-0 ps-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn dropdown-toggle border-start pb-0 ps-4" id="bd-theme" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-brightness-high" style="font-size: 25px;"></i>
                                 </button>
                                 <!-- Dropdown Menu (Light / Dark) -->
-                                <ul class="dropdown-menu dropdown-menu-end mt-2">
-                                    <li class="dropdown-item"><i class="bi bi-brightness-high"></i> Light</li>
-                                    <li class="dropdown-item"><i class="bi bi-moon-stars-fill"></i> Dark</li>
+                                <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="bd-theme-text">
+                                    <li>
+                                        <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light" aria-pressed="true">
+                                            <i class="bi bi-brightness-high"></i> Light
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                            <i class="bi bi-moon-stars-fill"></i> Dark
+                                        </button>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

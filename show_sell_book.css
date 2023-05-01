@@ -55,3 +55,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.dropdown-item:active {
+  background-color: #cccdcd7d;
+}
