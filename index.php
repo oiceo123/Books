@@ -248,14 +248,13 @@ if (!empty($_SESSION["userId"])) {
     <div class="row border-bottom mxw-row mb-3 mx-auto">
       <div class="col h4">หนังสือขายดี</div>
       <div class="col text-end pt-1 h5">
-        <a href="" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ดูทั้งหมด
-        </a>
+        <a href="./all_book.php?action=หนังสือขายดี" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ดูทั้งหมด</a>
       </div>
     </div>
     <!-- ส่วน Card -->
     <div class="row row-cols-1 row-col-spacial row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 mxw-row mx-auto">
       <?php
-      $stmt = $conn->prepare("SELECT * FROM book");
+      $stmt = $conn->prepare("SELECT b.BookId, b.BookName, b.Price, b.Rating, b.NumberOfRaters, b.BookCoverPath, b.BookPath FROM orders AS o INNER JOIN book AS b ON o.BookId = b.BookId GROUP BY o.BookId ORDER BY COUNT(o.BookId) DESC LIMIT 10");
       $stmt->execute();
       while ($row = $stmt->fetch()) {
       ?>
@@ -298,12 +297,172 @@ if (!empty($_SESSION["userId"])) {
                   </div>
                   <?php if (!empty($_SESSION["username"])) { ?>
                     <?php if (!in_array($row["BookId"], $bookOfUser)) { ?>
-                      <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                      <?php if ($row["Price"] != 0) { ?>
+                        <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                      <?php } else { ?>
+                        <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                      <?php } ?>
                     <?php } else { ?>
                       <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">เปิด</a>
                     <?php } ?>
                   <?php } else { ?>
-                    <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                    <?php if ($row["Price"] != 0) { ?>
+                      <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                    <?php } else { ?>
+                      <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                    <?php } ?>
+                  <?php } ?>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      <?php } ?>
+    </div>
+
+    <!-- ส่วนหัวข้อ -->
+    <div class="row border-bottom mxw-row mb-3 mx-auto mt-5">
+      <div class="col h4">มาใหม่</div>
+      <div class="col text-end pt-1 h5">
+        <a href="./all_book.php?action=มาใหม่" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ดูทั้งหมด</a>
+      </div>
+    </div>
+    <!-- ส่วน Card -->
+    <div class="row row-cols-1 row-col-spacial row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 mxw-row mx-auto">
+      <?php
+      $stmt = $conn->prepare("SELECT BookId, BookName, Price, Rating, NumberOfRaters, BookCoverPath, BookPath FROM book ORDER BY ReleaseDate DESC LIMIT 10");
+      $stmt->execute();
+      while ($row = $stmt->fetch()) {
+      ?>
+        <div class="col">
+          <div class="card w-100 h-100" style="min-width: 194px;">
+            <a href="./detail.php?BookId=<?= $row["BookId"] ?>" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
+              <div class="text-center">
+                <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top" style="aspect-ratio: 1 / 1.25" alt="..." />
+              </div>
+              <div class="card-body border-top ps-2 pe-1 pt-2 pb-1">
+                <span class="card-title fw-bold"><?= $row["BookName"] ?></span>
+                <div class="d-flex justify-content-between mt-2">
+                  <div class="me-1">
+                    <?php
+                    if ($row["Rating"] == 0) {
+                      echo '<span style="color: orange;"><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 0.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 1) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 1.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 2) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 2.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 3) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 3.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 4) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 4.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i></span>';
+                    } else {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i></span>';
+                    }
+                    ?>
+                    <div class="text-secondary" style="font-size: 0.7rem;">ผู้ให้คะแนน <?= $row["NumberOfRaters"] ?> คน</div>
+                  </div>
+                  <?php if (!empty($_SESSION["username"])) { ?>
+                    <?php if (!in_array($row["BookId"], $bookOfUser)) { ?>
+                      <?php if ($row["Price"] != 0) { ?>
+                        <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                      <?php } else { ?>
+                        <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                      <?php } ?>
+                    <?php } else { ?>
+                      <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">เปิด</a>
+                    <?php } ?>
+                  <?php } else { ?>
+                    <?php if ($row["Price"] != 0) { ?>
+                      <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                    <?php } else { ?>
+                      <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                    <?php } ?>
+                  <?php } ?>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      <?php } ?>
+    </div>
+
+    <!-- ส่วนหัวข้อ -->
+    <div class="row border-bottom mxw-row mb-3 mx-auto mt-5">
+      <div class="col h4">ฟรีกระจาย</div>
+      <div class="col text-end pt-1 h5">
+        <a href="./all_book.php?action=ฟรีกระจาย" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">ดูทั้งหมด</a>
+      </div>
+    </div>
+    <!-- ส่วน Card -->
+    <div class="row row-cols-1 row-col-spacial row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 mxw-row mx-auto">
+      <?php
+      $stmt = $conn->prepare("SELECT BookId, BookName, Price, Rating, NumberOfRaters, BookCoverPath, BookPath FROM book WHERE Price = 0 LIMIT 10");
+      $stmt->execute();
+      while ($row = $stmt->fetch()) {
+      ?>
+        <div class="col">
+          <div class="card w-100 h-100" style="min-width: 194px;">
+            <a href="./detail.php?BookId=<?= $row["BookId"] ?>" class="link-dark link-offset-2 link-underline link-underline-opacity-0">
+              <div class="text-center">
+                <img src="./publishers/<?= $row["BookCoverPath"] ?>" class="card-img-top" style="aspect-ratio: 1 / 1.25" alt="..." />
+              </div>
+              <div class="card-body border-top ps-2 pe-1 pt-2 pb-1">
+                <span class="card-title fw-bold"><?= $row["BookName"] ?></span>
+                <div class="d-flex justify-content-between mt-2">
+                  <div class="me-1">
+                    <?php
+                    if ($row["Rating"] == 0) {
+                      echo '<span style="color: orange;"><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 0.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 1) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 1.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 2) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 2.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 3) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 3.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 4) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star fs-6"></i></span>';
+                    } else if ($row["Rating"] <= 4.5) {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-half fs-6"></i></span>';
+                    } else {
+                      echo '<span style="color: orange;"><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i><i class="bi bi-star-fill fs-6"></i></span>';
+                    }
+                    ?>
+                    <div class="text-secondary" style="font-size: 0.7rem;">ผู้ให้คะแนน <?= $row["NumberOfRaters"] ?> คน</div>
+                  </div>
+                  <?php if (!empty($_SESSION["username"])) { ?>
+                    <?php if (!in_array($row["BookId"], $bookOfUser)) { ?>
+                      <?php if ($row["Price"] != 0) { ?>
+                        <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                      <?php } else { ?>
+                        <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                      <?php } ?>
+                    <?php } else { ?>
+                      <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">เปิด</a>
+                    <?php } ?>
+                  <?php } else { ?>
+                    <?php if ($row["Price"] != 0) { ?>
+                      <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                    <?php } else { ?>
+                      <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                    <?php } ?>
                   <?php } ?>
                 </div>
               </div>
