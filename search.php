@@ -291,12 +291,20 @@ if (!empty($_SESSION["userId"])) {
                                     </div>
                                     <?php if (!empty($_SESSION["username"])) { ?>
                                         <?php if (!in_array($row["BookId"], $bookOfUser)) { ?>
-                                            <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                                            <?php if ($row["Price"] != 0) { ?>
+                                                <a href="cart.php?action=add&BookId=<?= $row["BookId"] ?>&BookName=<?= $row["BookName"] ?>&Price=<?= $row["Price"] ?>&BookCoverPath=<?= $row["BookCoverPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                                            <?php } else { ?>
+                                                <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                                            <?php } ?>
                                         <?php } else { ?>
                                             <a href="./publishers/<?= $row["BookPath"] ?>" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">เปิด</a>
                                         <?php } ?>
                                     <?php } else { ?>
-                                        <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                                        <?php if ($row["Price"] != 0) { ?>
+                                            <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" role="button">฿<?= $row["Price"] ?></a>
+                                        <?php } else { ?>
+                                            <a href="cart.php" class="d-flex btn btn-outline-success justify-content-center align-items-center" style="width: 81.23px;" role="button">ฟรี</a>
+                                        <?php } ?>
                                     <?php } ?>
                                 </div>
                             </div>
