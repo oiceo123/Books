@@ -4,6 +4,62 @@
   }
 }
 
+/* Review (Rating) */
+/* These styles are applied by default.
+   They will also override the hover
+   style for all stars to the right
+   of the currently hovered star. */
+.rate i,
+.rate i:hover ~ i {
+  color: #dddddd;
+  text-shadow: none;
+  transition: color 200ms, text-shadow 200ms;
+  /* This will remove the delay when
+       moving the cursor left or right
+       within the set of stars. */
+  transition-delay: 0;
+}
+
+/* This is the style that will be
+     applied to all stars and then
+     subsequently removed from the stars
+     to the right of the one being
+     hovered. */
+.rate:hover i {
+  color: orange;
+}
+
+/* Make the effect apply one star at a
+     time. Limiting the selector to when
+     .rate is hovered removes the effect
+     without delay when cursor leaves
+     the .rate area. */
+.rate:hover i:nth-child(2) {
+  transition-delay: 30ms;
+}
+
+.rate:hover i:nth-child(3) {
+  transition-delay: 60ms;
+}
+
+.rate:hover i:nth-child(4) {
+  transition-delay: 90ms;
+}
+
+.rate:hover i:nth-child(5) {
+  transition-delay: 120ms;
+}
+
+.color-orange {
+  color: orange !important;
+}
+
+/* Miscellaneous styles. */
+.rate i {
+  cursor: pointer;
+  font-style: normal;
+}
+
 /* หน้าไหนมี Navbar ต้องเอาไปด้วย */
 .dropdown-menu {
   min-width: 7.5rem;

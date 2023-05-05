@@ -25,6 +25,64 @@ if (!empty($_SESSION["userId"])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./detail.css">
     <title>Book Name</title>
+    <script>
+        function toggleStar(el) {
+            // เพิ่มฟังก์ชันเปลี่ยนดาวเมื่อคลิก ไปเพิ่ม id ที่ดาวด้วย
+            let star = document.getElementById("star");
+            let star1 = document.getElementById("star-1");
+            let star2 = document.getElementById("star-2");
+            let star3 = document.getElementById("star-3");
+            let star4 = document.getElementById("star-4");
+            let star5 = document.getElementById("star-5");
+
+            if (el.id == "star-1") {
+                if (star) {
+                    star.value = "1";
+                }
+                star1.classList.add("color-orange");
+                star2.classList.remove("color-orange");
+                star3.classList.remove("color-orange");
+                star4.classList.remove("color-orange");
+                star5.classList.remove("color-orange");
+            } else if (el.id == "star-2") {
+                if (star) {
+                    star.value = "2";
+                }
+                star1.classList.add("color-orange");
+                star2.classList.add("color-orange");
+                star3.classList.remove("color-orange");
+                star4.classList.remove("color-orange");
+                star5.classList.remove("color-orange");
+            } else if (el.id == "star-3") {
+                if (star) {
+                    star.value = "3";
+                }
+                star1.classList.add("color-orange");
+                star2.classList.add("color-orange");
+                star3.classList.add("color-orange");
+                star4.classList.remove("color-orange");
+                star5.classList.remove("color-orange");
+            } else if (el.id == "star-4") {
+                if (star) {
+                    star.value = "4";
+                }
+                star1.classList.add("color-orange");
+                star2.classList.add("color-orange");
+                star3.classList.add("color-orange");
+                star4.classList.add("color-orange");
+                star5.classList.remove("color-orange");
+            } else {
+                if (star) {
+                    star.value = "5";
+                }
+                star1.classList.add("color-orange");
+                star2.classList.add("color-orange");
+                star3.classList.add("color-orange");
+                star4.classList.add("color-orange");
+                star5.classList.add("color-orange");
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -372,12 +430,39 @@ if (!empty($_SESSION["userId"])) {
             </div>
         <?php } ?>
         <!-- Rating -->
-        <div class="row">
-            <?php if (!empty($_SESSION["username"])) { ?>
-
-            <?php } else { ?>
-
-            <?php } ?>
+        <?php
+        $checkBookExists = false;
+        if (!empty($_SESSION["username"])) {
+            $checkBookExists = in_array($row["BookId"], $bookOfUser);
+        }
+        ?>
+        <div class="row mt-5 border mx-auto pb-4 rounded-3" style="max-width: 688px;">
+            <div class="col-12 bg-body-tertiary border-bottom rounded-top-3 pt-2">
+                <h5>กรุณาให้คะแนน</h5>
+            </div>
+            <div class="col-12 text-center mt-4">
+                <span class="rate"><i class="bi bi-star-fill fs-2" id="star-1" onclick="toggleStar(this)"></i><i class="bi bi-star-fill fs-2" id="star-2" onclick="toggleStar(this)"></i><i class="bi bi-star-fill fs-2" id="star-3" onclick="toggleStar(this)"></i><i class="bi bi-star-fill fs-2" id="star-4" onclick="toggleStar(this)"></i><i class="bi bi-star-fill fs-2" id="star-5" onclick="toggleStar(this)"></i></span>
+            </div>
+            <div class="col-8 col-md-5 mx-auto mt-3">
+                <?php if (!empty($_SESSION["username"])) { ?>
+                    <?php if ($checkBookExists) { ?>
+                        <form action="./save_rating.php" method="post">
+                            <input type="hidden" id="star" name="star" value="0">
+                            <input type="hidden" id="bookId" name="bookId" value="<?= $row["BookId"] ?>">
+                            <button type="submit" class="btn btn-outline-success rounded-pill w-100">ส่งรีวิว</button>
+                        </form>
+                    <?php } else { ?>
+                        <button type="button" class="btn btn-outline-success rounded-pill w-100 disabled">ส่งรีวิว</button>
+                    <?php } ?>
+                <?php } else { ?>
+                    <button type="button" class="btn btn-outline-success rounded-pill w-100 disabled">ส่งรีวิว</button>
+                <?php } ?>
+            </div>
+            <div class="col-12 mt-2 text-center text-danger">
+                <?php if (!$checkBookExists) { ?>
+                    <span style="font-size: 0.9rem;">หากต้องการให้คะแนน จำเป็นต้องซื้อหนังสือเล่มนี้ก่อน</span>
+                <?php } ?>
+            </div>
         </div>
     </div>
 </body>
