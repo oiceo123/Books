@@ -434,6 +434,9 @@ if (!empty($_SESSION["userId"])) {
         $checkBookExists = false;
         if (!empty($_SESSION["username"])) {
             $checkBookExists = in_array($row["BookId"], $bookOfUser);
+            if ($row["Price"] == 0) {
+                $checkBookExists = true;
+            }
         }
         ?>
         <div class="row mt-5 border mx-auto pb-4 rounded-3" style="max-width: 688px;">
