@@ -196,22 +196,16 @@ session_start();
         <!-- Bottom Nav -->
         <ul class="nav nav-underline justify-content-sm-center justify-content-start flex-nowrap overflow-x-auto hide-scollbar" style="background-color: rgb(250, 249, 250); white-space: nowrap;">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">หน้าแรก</a>
+                <a class="nav-link" href="./">หน้าแรก</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">ขายดี</a>
+                <a class="nav-link" href="./all_book.php?action=หนังสือขายดี">ขายดี</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">มาใหม่</a>
+                <a class="nav-link" href="./all_book.php?action=มาใหม่">มาใหม่</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">โปรโมชั่น</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">ฟรีกระจาย</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">แนะนำ</a>
+                <a class="nav-link" href="./all_book.php?action=ฟรีกระจาย">ฟรีกระจาย</a>
             </li>
         </ul>
     </div>

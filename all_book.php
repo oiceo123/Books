@@ -27,10 +27,25 @@ if (!empty($_SESSION["userId"])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./all_book.css" />
     <title>All Book</title>
+    <script>
+        function activeBottomNavbar() {
+            let action = "<?= $action ?>";
+            if (action == "หนังสือขายดี") {
+                let x = document.getElementById("bestBook");
+                x.classList.add('active');
+            } else if (action == "มาใหม่") {
+                let x = document.getElementById("newBook");
+                x.classList.add('active');
+            } else if (action == "ฟรีกระจาย") {
+                let x = document.getElementById("freeBook");
+                x.classList.add('active');
+            }
+        }
+    </script>
 </head>
 
-<body>
-    <!-- Navbar ต้นแบบ -->
+<body onload="activeBottomNavbar()">
+    <!-- Navbar Copy -->
     <div class="fixed-top">
         <!-- Top Navbar -->
         <nav class="navbar navbar-expand-lg py-3" style="background-color: rgb(253, 253, 253);">
@@ -197,22 +212,16 @@ if (!empty($_SESSION["userId"])) {
         <!-- Bottom Nav -->
         <ul class="nav nav-underline justify-content-sm-center justify-content-start flex-nowrap overflow-x-auto hide-scollbar" style="background-color: rgb(250, 249, 250); white-space: nowrap;">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">หน้าแรก</a>
+                <a class="nav-link" href="./">หน้าแรก</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">ขายดี</a>
+                <a class="nav-link" id="bestBook" href="./all_book.php?action=หนังสือขายดี">ขายดี</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">มาใหม่</a>
+                <a class="nav-link" id="newBook" href="./all_book.php?action=มาใหม่">มาใหม่</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">โปรโมชั่น</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">ฟรีกระจาย</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">แนะนำ</a>
+                <a class="nav-link" id="freeBook" href="./all_book.php?action=ฟรีกระจาย">ฟรีกระจาย</a>
             </li>
         </ul>
     </div>
