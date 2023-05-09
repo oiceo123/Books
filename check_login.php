@@ -24,7 +24,13 @@
         $_SESSION["username"] = $row["Username"];
         $_SESSION["displayName"] = $row["DisplayName"];
         $_SESSION["publisherName"] = $row["PublisherName"];
-        echo "<script>window.location.href='http://localhost/Project_Books/';</script>";
+        $_SESSION["role"] = $row["Role"];
+        if($row["Role"] == "admin") {
+            echo "<script>window.location.href='http://localhost/Project_Books/admin.php';</script>";
+        }
+        else {
+            echo "<script>window.location.href='http://localhost/Project_Books/';</script>";
+        }
     }
     else {
         echo "<script>
